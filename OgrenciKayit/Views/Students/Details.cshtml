@@ -1,0 +1,61 @@
+﻿@model StudentModel
+
+@{
+    ViewData["Title"] = Model.Name + " Details";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-2">
+            @Html.DisplayNameFor(model => model.Name)
+            @*<label asp-for="Name"></label>*@
+        </dt>
+        <dd class="col-10">
+            @*@Model.Name*@
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-2">
+            @Html.DisplayNameFor(model => model.SurName)
+        </dt>
+        <dd class="col-10">
+            @Html.DisplayFor(model => model.SurName)
+        </dd>
+        <dt class="col-2">
+            @Html.DisplayNameFor(model => model.SchoolNo)
+        </dt>
+        <dd class="col-10">
+            @Html.DisplayFor(model => model.SchoolNo)
+        </dd>
+        <dt class="col-2">
+            @Html.DisplayNameFor(model => model.DateOfBirthdayDisplay)
+        </dt>
+        <dd class="col-10">
+            @Html.DisplayFor(model => model.DateOfBirthdayDisplay)
+        </dd>
+        <dt class="col-2">
+            @Html.DisplayNameFor(model => model.ClassNameDisplay)
+        </dt>
+        <dd class="col-10">
+            @Html.DisplayFor(model => model.ClassNameDisplay)
+        </dd>
+        <dt class="col-2">
+            @Html.DisplayNameFor(model => model.LessonDisplay)
+        </dt>
+        <dd class="col-10">
+            @Html.Raw(Model.LessonDisplay)
+        </dd>
+
+
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>&nbsp;|&nbsp;
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+
