@@ -14,5 +14,12 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    background-image: url('../photos/blue-sky-summer-dv-1280x720.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-size: .75em;
+    font-family: Verdana, Helvetica, Sans-Serif;
+    margin: 0;
+    padding: 0;
+    color: #696969;
 }

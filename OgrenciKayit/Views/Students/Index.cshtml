@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Create New </a>
 </p>
-<table id="students" class="display" style="width:100%">
+<table id="students" class="table" style="width:100%>
     <thead>
         <tr>
             <th>
@@ -52,7 +52,7 @@
 						@Html.DisplayFor(modelItem => item.ClassNameDisplay)
 					</td>
                     <td>
-						@Html.DisplayFor(modelItem => item.LessonDisplay)
+						@Html.Raw(item.LessonDisplay)
 					</td>
 					<td>
 						<a asp-action="Details" asp-route-id="@item.Id">Details</a>&nbsp;|&nbsp;

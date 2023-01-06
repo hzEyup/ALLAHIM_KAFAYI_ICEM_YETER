@@ -14,7 +14,7 @@
 {
     <p class="text-warning">@TempData["Message"]</p>
 }
-<table id="classes" class="display" style="width:100%">
+<table id="classes" class="table" style="width:100%">
 
     <thead>
         <tr>
@@ -32,7 +32,7 @@
     </thead>
     <tbody>
 		@foreach (var item in Model) {
-				<tr>
+				<tr class="table">
 					<td>
 						@Html.DisplayFor(modelItem => item.Name)
 					</td>
