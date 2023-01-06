@@ -14,7 +14,8 @@
 {
     <p class="text-warning">@TempData["Message"]</p>
 }
-<table class="table">
+<table id="classes" class="display" style="width:100%">
+
     <thead>
         <tr>
             <th>
@@ -51,6 +52,19 @@
 		}
     </tbody>
 </table>
+
+
+@section Scripts {
+        <link href="~/lib/datatables/css/jquery.datatables.min.css" rel="stylesheet" />
+        <script src="~/lib/datatables/js/jquery.datatables.min.js"></script>
+
+        <script>
+            $(function () {
+                $("#classes").DataTable();
+            });
+        </script>
+}
+
 
 
 

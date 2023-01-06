@@ -8,7 +8,7 @@ namespace AppCore.Results
         {
         }
 
-        public SuccessResult(): base(true, "")
+        public SuccessResult() : base(true, "")
         {
         }
     }

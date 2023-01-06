@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Create New </a>
 </p>
-<table class="table">
+<table id="students" class="display" style="width:100%">
     <thead>
         <tr>
             <th>
@@ -71,7 +71,7 @@
 
         <script>
             $(function () {
-                $("#products").DataTable();
+                $("#students").DataTable();
             });
         </script>
 }

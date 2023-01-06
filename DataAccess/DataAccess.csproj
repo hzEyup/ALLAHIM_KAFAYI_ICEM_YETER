@@ -14,7 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ETrade8438_Yeni\AppCore\AppCore.csproj" />
     <ProjectReference Include="..\AppCore\AppCore.csproj" />
   </ItemGroup>
 

@@ -48,7 +48,6 @@ namespace OgrenciKayit.Controllers
         public IActionResult Create()
         {
 			ViewData["ClassId"] = new SelectList(_classService.Query().ToList(), "Id", "Name");
-
            ViewBag.Lessons = new MultiSelectList(_lessonService.Query().ToList(), "Id", "Name");
 
 			return View();
@@ -65,8 +64,10 @@ namespace OgrenciKayit.Controllers
                     return RedirectToAction(nameof(Index));
                 ModelState.AddModelError("", result.Message);
             }
+            ViewData["ClassId"] = new SelectList(_classService.Query().ToList(), "Id", "Name");
+            ViewBag.Lessons = new MultiSelectList(_lessonService.Query().ToList(), "Id", "Name");
 
-			return View(student);
+            return View(student);
         }
 
         // GET: Students/Edit/5
