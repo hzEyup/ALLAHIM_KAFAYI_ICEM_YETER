@@ -14,7 +14,7 @@
 {
     <p class="text-warning">@TempData["Message"]</p>
 }
-<table id="classes" class="table" style="width:100%">
+<table  class="table">
 
     <thead>
         <tr>
@@ -43,9 +43,9 @@
                     @Html.DisplayFor(modelItem => item.StudentCountDisplay)
                 </th>
 				
-					<td>
-						<a asp-action="Details" asp-route-id="@item.Id">Details</a>&nbsp;|&nbsp;
-						<a asp-action="Edit" asp-route-id="@item.Id">Edit</a>&nbsp;|&nbsp;
+					<td >
+                    <a asp-action="Details" style="color:paleturquoise " asp-route-id="@item.Id">Details</a>&nbsp;|&nbsp;
+                    <a asp-action="Edit" style="color:darkgoldenrod " asp-route-id="@item.Id">Edit</a>&nbsp;|&nbsp;
 						<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
 					</td>
 				</tr>

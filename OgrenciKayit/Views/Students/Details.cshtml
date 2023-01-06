@@ -1,13 +1,13 @@
 ﻿@model StudentModel
-
 @{
-    ViewData["Title"] = Model.Name + " Details";
+    ViewData["Title"] = Model.Name + " "+  Model.SurName;
+    
 }
-
+</>
 <h1>@ViewData["Title"]</h1>
 
-<div>
-    <h4>Product</h4>
+<div style="color:antiquewhite">
+    <h4>Student</h4>
     <hr />
     <dl class="row">
         <dt class="col-2">
@@ -52,10 +52,9 @@
 
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>&nbsp;|&nbsp;
-    <a asp-action="Index">Back to List</a>
+<div class="custombutton">
+    <a asp-action="Edit" class="custombutton" style="background-color:darkmagenta" asp-route-id="@Model?.Id">  &nbsp; Edit  &nbsp;</a>&nbsp;|&nbsp;
+    <a asp-action="Index" class="custombutton" style="background-color:darkmagenta"> &nbsp; Back to List &nbsp;</a>
 </div>
-
 
 
