@@ -29,7 +29,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     {
         config.LoginPath = "/Account/Users/Login";
         config.AccessDeniedPath = "/Account/Users/AccessDenied";
-        config.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+        config.ExpireTimeSpan = TimeSpan.FromMinutes(50 );
         config.SlidingExpiration = true;
     });
 #endregion
@@ -46,7 +46,6 @@ builder.Services.AddScoped<ILessonService, LessonService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<UserRepoBase, UserRepo>();
-
 #endregion
 // Add services to the container.
 builder.Services.AddControllersWithViews();

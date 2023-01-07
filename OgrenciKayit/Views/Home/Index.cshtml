@@ -3,6 +3,29 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">How Can I Help You?</h1>
-    <p>You wanna feel the Life ? </p>
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <h1 style="color:red" class="display-4">PLEASE LOGIN TO PROCESS!! &nbsp;&nbsp;</h1>
+    }
+</div>
+
+<div style="color:aliceblue">
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    @if (User.Identity.IsAuthenticated)
+    {
+        <h1 style="color:goldenrod">&nbsp;&nbsp;&nbsp; &nbsp;hello @User.Identity.Name!! Welcome To Student Registration System</h1>
+        <br />
+        <br />
+
+        <p style=" font-size:xx-large">
+            &nbsp On this site, you can enroll students, view student details,<br />
+            &nbsp edit student registration, and delete student registration.<br />
+            &nbsp; In addition to student registrations you can also edit<br />
+            &nbsp; class and lesson registrations.<br />
+        </p>
+    }
 </div>
