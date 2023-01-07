@@ -59,3 +59,13 @@ a {
 table {
     opacity: 0,2;
 }
+.custombody {
+    background-image: url('../photos/wp7218721.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-size: .75em;
+    font-family: Verdana, Helvetica, Sans-Serif;
+    margin: 0;
+    padding: 0;
+    color: #696969;
+}

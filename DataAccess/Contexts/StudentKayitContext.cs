@@ -15,7 +15,11 @@ namespace DataAccess.Contexts
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<StudentLesson> studentLessons { get; set; }
         public DbSet<Class> Classes { get; set; }
-
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserDetail> UserDetails { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<City> Cities { get; set; }
         public StudentKayitContext(DbContextOptions options) : base(options)
         {
 
@@ -43,8 +47,38 @@ namespace DataAccess.Contexts
                .HasForeignKey(ps => ps.LessonId)
                .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<UserDetail>()
+              .HasOne(ud => ud.User)
+              .WithOne(u => u.UserDetail)
+              .HasForeignKey<UserDetail>(ud => ud.UserId)
+              .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<UserDetail>()
+                .HasOne(ud => ud.Country)
+                .WithMany(c => c.UserDetails)
+                .HasForeignKey(ud => ud.CountryId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<UserDetail>()
+                .HasOne(ud => ud.City)
+                .WithMany(c => c.UserDetails)
+                .HasForeignKey(ud => ud.CityId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<City>()
+                .HasOne(ci => ci.Country)
+                .WithMany(co => co.Cities)
+                .HasForeignKey(ci => ci.CountryId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.UserName).IsUnique();
+
             modelBuilder.Entity<Student>()
                .HasIndex(p => p.Name);
+
+
+
         }
     }
 }

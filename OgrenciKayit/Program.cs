@@ -2,6 +2,7 @@
 using Business.Services;
 using DataAccess.Contexts;
 using DataAccess.Repositories;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
@@ -22,6 +23,17 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 });
 #endregion
 
+#region Authentication
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(config =>
+    {
+        config.LoginPath = "/Account/Users/Login";
+        config.AccessDeniedPath = "/Account/Users/AccessDenied";
+        config.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+        config.SlidingExpiration = true;
+    });
+#endregion
+
 string connectionString = builder.Configuration.GetConnectionString("StudentKayitDb");
 #region IoC Container (Inversion of Control Container)
 builder.Services.AddDbContext<StudentKayitContext>(options => options.UseSqlServer(connectionString));
@@ -31,6 +43,10 @@ builder.Services.AddScoped<ClassRepoBase, ClassRepo>();
 builder.Services.AddScoped<IClassService, ClassService>();
 builder.Services.AddScoped<LessonRepoBase, LessonRepo>();
 builder.Services.AddScoped<ILessonService, LessonService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<UserRepoBase, UserRepo>();
+
 #endregion
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -57,7 +73,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
+app.UseAuthentication(); 
+
+app.UseAuthorization(); 
+
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
