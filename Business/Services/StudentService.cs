@@ -41,6 +41,7 @@ namespace Business.Services
                 SchoolNo = schoolNo,//int.tryparse
                 DateOfBirthday = model.DateOfBirthday,
                 studentLessons = model.LessonIds?.Select(sId => new StudentLesson()
+               
                 {
                     LessonId = sId
                 }).ToList()
@@ -67,16 +68,17 @@ namespace Business.Services
 
         public IQueryable<StudentModel> Query()
         {
-            return _studentRepo.Query(s => s.Class).Select(s => new StudentModel()
+            return _studentRepo.Query(s => s.Class, s => s.studentLessons).Select(s => new StudentModel()
             {
                 ClassId = s.ClassId,
                 SchoolNo = s.SchoolNo.ToString(),
                 DateOfBirthday = s.DateOfBirthday,
                 Guid = s.Guid,
                 Id = s.Id,
-                Name = s.Name,
+                Name = s.Name, 
                 SurName = s.SurName,
                 ClassNameDisplay = s.Class.Name,
+                LessonDisplay= string.Join("<br/>", s.studentLessons.Select(sl=> sl.Lesson.Name)),
                 DateOfBirthdayDisplay = s.DateOfBirthday.HasValue ? s.DateOfBirthday.Value.ToString("yyyy/MM/dd") : "",
 
             });

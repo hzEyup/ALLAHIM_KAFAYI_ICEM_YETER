@@ -49,8 +49,7 @@ button {
 }
 
 a {
-    text-decoration: none;
-    font-size: 22px;
+    font-size:large;
     color: black;
 }
 
@@ -80,22 +79,21 @@ table {
     background-color: #636e72;
 }
 
-.kutu {
-    width: 100px;
-    height: 100px;
-    font-size: 30px;
-    margin: 10px;
-    padding: 20px;
-    text-align: center;
-    background-color: #0984e3;
-    color: #fff;
-}
+
 
 footer {
-    position: absolute;
+    position:inherit;
     bottom: 0;
     left: 0px;
     width: 100%;
-    min-height: 150px;
-overflow:hidden;
+    max-height: 400px;
+overflow:clip;
+}
+.kutu {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.kutu tbody tr td {
+    font-weight: bold;
 }

@@ -5,12 +5,12 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1 style="color:aliceblue">@ViewData["Title"]</h1>
 
 <div>
-    <h4>Lesson</h4>
+    <h4 style="color:aliceblue">@Model.Name</h4>
     <hr />
-    <dl class="row">
+    <dl style="color:aliceblue" class="row">
         <dt class="col-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
@@ -26,9 +26,9 @@
 
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>&nbsp;|&nbsp;
-    <a asp-action="Index">Back to List</a>
+<div class="custombutton">
+    <a asp-action="Edit" class="custombutton" style="background-color:darkmagenta" asp-route-id="@Model?.Id">  &nbsp; Edit  &nbsp;</a>&nbsp;|&nbsp;
+    <a asp-action="Index" class="custombutton" style="background-color:darkmagenta"> &nbsp; Back to List &nbsp;</a>
 </div>
 
 

@@ -23,13 +23,13 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 });
 #endregion
 
-#region Authentication
+#region Authentication and sessýon 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(config =>
     {
         config.LoginPath = "/Account/Users/Login";
         config.AccessDeniedPath = "/Account/Users/AccessDenied";
-        config.ExpireTimeSpan = TimeSpan.FromMinutes(50 );
+        config.ExpireTimeSpan = TimeSpan.FromMinutes(50);
         config.SlidingExpiration = true;
     });
 #endregion

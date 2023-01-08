@@ -2,16 +2,20 @@
 @*Model namespace using directive should be added to _ViewImports.cshtml.*@
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lessons";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1 style="color:aliceblue">@ViewData["Title"]</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
+
+    <a asp-action="Create" class="custombutton" style="background-color:darkorchid">
+        &nbsp;
+        Create New
+        &nbsp;
+    </a>
+
+<table style="background-color: rgba(255,255,255,0.3)" class="table">
+    <thead style="font-size:large">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
@@ -25,7 +29,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+            <tr style="color:aliceblue">
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>

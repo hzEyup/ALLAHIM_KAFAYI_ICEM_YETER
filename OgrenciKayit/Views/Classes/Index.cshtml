@@ -5,19 +5,25 @@
     ViewData["Title"] = "Class";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1 style="color:aliceblue">@ViewData["Title"]</h1>
 
 <p>
-    <a asp-action="Create">Create New Class</a>
+<p class="custombutton">
+    <a asp-action="Create" class="custombutton" style="background-color:darkorchid">
+        &nbsp;
+        Create New
+        &nbsp;
+    </a>
+</p>
 </p>
 @if (TempData["Message"] is not null)
 {
     <p class="text-warning">@TempData["Message"]</p>
 }
-<table  class="table">
+<table style="background-color: rgba(255,255,255,0.3)" class="table">
 
-    <thead>
-        <tr>
+    <thead >
+        <tr style="font-size:large">
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -32,7 +38,7 @@
     </thead>
     <tbody>
 		@foreach (var item in Model) {
-				<tr class="table">
+				<tr style="color:aliceblue" class="table">
 					<td>
 						@Html.DisplayFor(modelItem => item.Name)
 					</td>

@@ -4,10 +4,10 @@
     ViewData["Title"] = "Students";
 }
 
-<h1>STUDENTS </h1>
+<h1 style="color:aliceblue ">STUDENTS </h1>
 
 
-<table  class="table table-hover">
+<table style="background-color: rgba(255,255,255,0.3)" class="table table-hover kutu">
     <thead style="font-size:large">
         <tr>
            
@@ -34,7 +34,7 @@
     </thead>
     <tbody style="font-synthesis-style:unset">
 		@foreach (var item in Model) {
-            <tr style="color:lightgray">
+            <tr  style="color:ivory " >
 					<td>
 						@Html.DisplayFor(modelItem => item.Name)
 					</td>
@@ -51,7 +51,7 @@
 						@Html.DisplayFor(modelItem => item.ClassNameDisplay)
 					</td>
                     <td>
-						@Html.Raw(item.LessonIds)
+						@Html.Raw(item.LessonDisplay)
 					</td>
 					<td >
                     <a asp-action="Details" style="color:paleturquoise " asp-route-id="@item.Id">Details</a>&nbsp;|&nbsp;

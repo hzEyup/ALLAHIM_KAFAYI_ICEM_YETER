@@ -1,15 +1,16 @@
 ﻿@model StudentModel
-@{
+@*@{
     ViewData["Title"] = Model.Name + " "+  Model.SurName;
     
-}
+}*@
+
 </>
-<h1>@ViewData["Title"]</h1>
+<h1 style="color:gold">@Model.Name &nbsp;@Model.SurName </h1>
 
 <div style="color:antiquewhite">
     <h4>Student</h4>
     <hr />
-    <dl class="row">
+    <dl style="color:antiquewhite" class="row">
         <dt class="col-2">
             @Html.DisplayNameFor(model => model.Name)
             @*<label asp-for="Name"></label>*@
