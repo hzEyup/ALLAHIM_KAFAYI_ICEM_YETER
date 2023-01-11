@@ -4,6 +4,7 @@ using AppCore.Results.Bases;
 using Business.Models;
 using DataAccess.Entities;
 using DataAccess.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace Business.Services
 {
     public interface IClassService : IService<ClassModel>
     {
+        Task<List<ClassModel>> GetListAsync();
     }
 
     public class ClassService : IClassService
@@ -75,6 +77,12 @@ namespace Business.Services
             };
             _classRepo.Update(entity);
             return new SuccessResult("Class updated succesfully.");
+        }
+
+        public async Task<List<ClassModel>> GetListAsync()
+        {
+            List<ClassModel> classes = await Query().ToListAsync();
+            return classes;
         }
     }
 }

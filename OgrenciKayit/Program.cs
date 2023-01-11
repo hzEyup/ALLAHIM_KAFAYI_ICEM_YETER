@@ -46,6 +46,7 @@ builder.Services.AddScoped<ILessonService, LessonService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<UserRepoBase, UserRepo>();
+builder.Services.AddScoped<IReportService, ReportService>();
 #endregion
 // Add services to the container.
 builder.Services.AddControllersWithViews();
