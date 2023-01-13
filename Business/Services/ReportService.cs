@@ -1,6 +1,7 @@
 ﻿using Business.Models;
 using DataAccess.Entities;
 using DataAccess.Repositories;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Business.Services
 {
@@ -18,6 +19,7 @@ namespace Business.Services
         {
             _studentRepo = studentRepo;
         }
+  
 
         public List<ReportModel> GetListInnerJoin(ReportFilterModel filter)
         {
@@ -31,11 +33,12 @@ namespace Business.Services
                         //join studentLesson in studentLessonQuery
                         //on student.Id equals studentLesson.StudentId
                         //join lesson in lessonQuery
-                        //on student/*Lesson.LessonId equals lesson.Id*/
-                       
-                        
-                       
-                        
+                        //on studentLesson.LessonId equals lesson.Id
+
+
+
+
+
                         select new ReportModel()
                         {
                            ClassName = Class.Name,
@@ -43,15 +46,17 @@ namespace Business.Services
                            StudentName = student.Name,
                            schoolNo = student.SchoolNo.ToString(),
                            StudentSurName = student.SurName,
-                           //LessonName = lesson.Name,
-                           //Numerical = lesson.IsNumeric ? "Yes" : "No",
+                            //LessonName = lesson.Name,
+                            //Numerical = lesson.IsNumeric ? "Yes" : "No",
+
+
+
+                            ClassId = Class.Id,
+                           
                            
 
-
-                           ClassId = Class.Id,
-
                         };
-            query = query.OrderBy(q => q.ClassName).ThenBy(q => q.StudentName);
+            query =query.OrderBy(q => q.ClassName).ThenBy(q => q.StudentName);
             if (filter is not null)
             {
                 if (!string.IsNullOrWhiteSpace(filter.StudentName))
@@ -61,6 +66,14 @@ namespace Business.Services
                 if (filter.ClassId.HasValue)
                 {
                     query = query.Where(q => q.ClassId == filter.ClassId.Value);
+                }
+                //if (filter.LessonIds != null && filter.LessonIds.Count > 0)
+                //{
+                //    query = query.Where(q => filter.LessonIds.Contains(q.LessonIds ?? 0));
+                //}
+                if (!string.IsNullOrWhiteSpace(filter.StudentSurName))
+                {
+                    query = query.Where(q => q.StudentSurName.ToUpper().Contains(filter.StudentSurName.ToUpper().Trim()));
                 }
             }
             return query.ToList();

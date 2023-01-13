@@ -31,11 +31,13 @@ namespace Business.Models
         [DisplayName("Sur Name")]
         public string StudentSurName { get; set; }
 
+ 
+
         #endregion
 
         #region Filter
         public int ClassId { get; set; }
-        
+        public int? LessonIds { get; set; }
         #endregion
     }
 }

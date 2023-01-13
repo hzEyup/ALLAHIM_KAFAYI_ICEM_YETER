@@ -5,11 +5,11 @@
     ViewData["Title"] = "Report";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1 style="color:aliceblue">@ViewData["Title"]</h1>
 
 <form asp-action="Index" method="get">
-    <div class="row">
-        <div class="col-2">
+    <div style="color:aliceblue" class="row">
+        <div style="color:aliceblue" class="col-2">
             @await Component.InvokeAsync("Classes")
         </div>
 
@@ -19,22 +19,30 @@
             <div class="row">
 
 
-                <div class="col-4">
+                <div class="col-3">
                     <input asp-for="Filter.StudentName" class="form-control" placeholder="@Html.DisplayNameFor(m => m.Filter.StudentName)" />
                 </div>
+               
                 <div class="col-4">
-                    <select asp-for="Filter.ClassId" asp-items="Model.Classes" class="form-select">
+                    <input asp-for="Filter.StudentSurName" class="form-control" placeholder="@Html.DisplayNameFor(m => m.Filter.StudentSurName)" />
+                </div>
+                <div class="col-3">
+                    <select asp-for="Filter.ClassId" asp-items="Model.Classes" class="form-select select2">
                         <option value="">@Html.DisplayNameFor(m => m.Filter.ClassId)</option>
                     </select>
                 </div>
               
+
             </div>
+         
 
             <div class="row" style="padding-top: 15px;">
-                <div class="col-12">
+                <div class="col-7">
                     <button type="submit" class="btn btn-primary">Search</button>
                     &nbsp;&nbsp;
-                    <a asp-action="Index" class="btn btn-outline-primary">Clear</a>
+                </div>
+                <div class="col-5">
+                    <a asp-action="Index" class="btn btn-primary">Clear</a>
                 </div>
             </div>
         </div>
@@ -45,9 +53,9 @@
         <table style="background-color: rgba(255,255,255,0.3)" class="table table-striped table-hover kutu">
             <thead>
                 <tr>
-                   @* <th>
-                        @Html.DisplayNameFor(model => model.Report.FirstOrDefault().LessonName)
-                    </th>*@
+                    @* <th>
+                @Html.DisplayNameFor(model => model.Report.FirstOrDefault().LessonName)
+                </th>*@
                     <th>
                         @Html.DisplayNameFor(model => model.Report.FirstOrDefault().ClassName)
                     </th>
@@ -69,9 +77,9 @@
                 @foreach (var item in Model.Report)
                 {
                     <tr>
-                       @* <td>
-                            @Html.DisplayFor(modelItem => item.LessonName)
-                        </td>*@
+                        @* <td>
+                @Html.DisplayFor(modelItem => item.LessonName)
+                </td>*@
                         <td>
                             @Html.DisplayFor(modelItem => item.ClassName)
                         </td>

@@ -15,5 +15,7 @@ namespace Business.Models
         [DisplayName("Student Sur Name")]
         public string StudentSurName { get; set; }
 
+        public List<int> LessonIds { get; set; }
+
     }
 }

@@ -10,5 +10,6 @@ namespace MvcWebUI.Areas.Reports.Models
         public List<ReportModel> Report { get; set; }
         public ReportFilterModel Filter { get; set; }
         public SelectList Classes { get; set; }
+        public MultiSelectList LessonIds { get; set; }
     }
 }
