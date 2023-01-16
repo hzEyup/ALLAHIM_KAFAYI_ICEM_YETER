@@ -38,7 +38,7 @@
             <div class="row mb-3">
                 <label asp-for="DateOfBirthday" class="col-2 col-form-label"></label>
 				<div class="col-5">
-					<input asp-for="DateOfBirthday" class="form-control" />
+					<input asp-for="DateOfBirthday" class="form-control date" type="text" />
 					<span asp-validation-for="DateOfBirthday" class="text-danger"></span>
 				</div>
             </div>
@@ -60,9 +60,9 @@
 				</div>
 			</div>
   
-            <div class="row mb-5">
+            <div>
 				<div class=" col-4">
-					<input type="submit" value="Save" class="btn btn-primary" />
+					<input type="submit" value="Save" class="btn btn-primary col-12" />
 					&nbsp;&nbsp;
                     <button type="reset" class="btn btn-primary">Reset</button>
 					&nbsp;&nbsp;
@@ -77,7 +77,7 @@
             </div>
         </form>
     </div>
-</div>
+</div>en
 
 
 
@@ -85,6 +85,15 @@
 @section Scripts {
 	<link href="~/lib/select2/css/select2.min.css" rel="stylesheet" />
 	<script src="~/lib/select2/js/select2.min.js"></script>
+	<style>
+
+		.select2-container--default .select2-selection--multiple .select2-selection__choice {
+			background-color: #28a745;
+			border-color: #3d9970;
+			color: red;
+		}
+		
+	</style>
 
 	<link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" />
 	<script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
@@ -95,13 +104,14 @@
 			$("select").select2();
 			$('.date').datepicker({
 				todayBtn: "linked",
-				language: "en",
+				language: "tr",
 				orientation: "auto left",
 				autoclose: true,
-				todayHighlight: true
+				todayHighlight: false
 			});
 		});
 	</script>
 }
+
 
 

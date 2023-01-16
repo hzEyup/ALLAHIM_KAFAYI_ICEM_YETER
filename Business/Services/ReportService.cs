@@ -67,10 +67,10 @@ namespace Business.Services
                 {
                     query = query.Where(q => q.ClassId == filter.ClassId.Value);
                 }
-                //if (filter.LessonIds != null && filter.LessonIds.Count > 0)
-                //{
-                //    query = query.Where(q => filter.LessonIds.Contains(q.LessonIds ?? 0));
-                //}
+                if (filter.LessonIds != null && filter.LessonIds.Count > 0)
+                {
+                    query = query.Where(q => filter.LessonIds.Contains(q.LessonIds ?? 0));
+                }
                 if (!string.IsNullOrWhiteSpace(filter.StudentSurName))
                 {
                     query = query.Where(q => q.StudentSurName.ToUpper().Contains(filter.StudentSurName.ToUpper().Trim()));
