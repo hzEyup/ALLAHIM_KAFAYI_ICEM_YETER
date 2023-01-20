@@ -37,16 +37,29 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 string connectionString = builder.Configuration.GetConnectionString("StudentKayitDb");
 #region IoC Container (Inversion of Control Container)
 builder.Services.AddDbContext<StudentKayitContext>(options => options.UseSqlServer(connectionString));
+
 builder.Services.AddScoped<StudentRepoBase, StudentRepo>();
 builder.Services.AddScoped<IStudentService, StudentService>();
+
 builder.Services.AddScoped<ClassRepoBase, ClassRepo>();
 builder.Services.AddScoped<IClassService, ClassService>();
+
 builder.Services.AddScoped<LessonRepoBase, LessonRepo>();
 builder.Services.AddScoped<ILessonService, LessonService>();
+
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+
 builder.Services.AddScoped<UserRepoBase, UserRepo>();
+
 builder.Services.AddScoped<IReportService, ReportService>();
+
+builder.Services.AddScoped<CityRepoBase, CityRepo>();
+builder.Services.AddScoped<CountryRepoBase, CountryRepo>();
+
+builder.Services.AddScoped<ICityService, CityService>();
+builder.Services.AddScoped<ICountryService, CountryService>();
+
 #endregion
 // Add services to the container.
 builder.Services.AddControllersWithViews();

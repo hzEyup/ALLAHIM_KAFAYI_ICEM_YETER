@@ -17,5 +17,6 @@ namespace Business.Models
 
         public List<int> LessonIds { get; set; }
 
+        
     }
 }

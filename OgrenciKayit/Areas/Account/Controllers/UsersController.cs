@@ -3,6 +3,7 @@ using Business.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
 
 namespace MvcWebUI.Areas.Account.Controllers
@@ -11,10 +12,12 @@ namespace MvcWebUI.Areas.Account.Controllers
     public class UsersController : Controller
     {
         private readonly IAccountService _accountService;
+        private readonly ICountryService _countryService;
 
-        public UsersController(IAccountService accountService)
+        public UsersController(IAccountService accountService, ICountryService countryService)
         {
             _accountService = accountService;
+            _countryService = countryService;
         }
 
         public IActionResult Login()
@@ -49,6 +52,7 @@ namespace MvcWebUI.Areas.Account.Controllers
 
         public IActionResult Register()
         {
+            ViewBag.Countries = new SelectList(_countryService.Query().ToList(), "Id", "Name");
             return View();
         }
 
@@ -68,7 +72,7 @@ namespace MvcWebUI.Areas.Account.Controllers
 
         public IActionResult AccessDenied()
         {
-            return NotFound();
+            return View("_Error", "You don't have access to this operation!");
         }
 
         public async Task<IActionResult> Logout()
