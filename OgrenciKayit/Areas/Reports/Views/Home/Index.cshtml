@@ -30,9 +30,12 @@
                     <select asp-for="Filter.ClassId" asp-items="Model.Classes" class="form-select select2">
                         <option value="">@Html.DisplayNameFor(m => m.Filter.ClassId)</option>
                     </select>
+                    
                 </div>
-              
-
+                <div class="col-4">
+                    <select mulitple asp-for="Filter.LessonIds" asp-items="Model.Lessons" class="form-select select2">
+                    </select>
+                </div>
             </div>
          
 
@@ -71,15 +74,16 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Report.FirstOrDefault().DateOfbirthDay)
                     </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Report.FirstOrDefault().LessonName)
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model.Report)
                 {
                     <tr style="color:aliceblue">
-                        @* <td>
-                @Html.DisplayFor(modelItem => item.LessonName)
-                </td>*@
+                      
                         <td>
                             @Html.DisplayFor(modelItem => item.ClassName)
                         </td>
@@ -94,6 +98,9 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.DateOfbirthDay)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LessonName)
                         </td>
                     </tr>
                 }

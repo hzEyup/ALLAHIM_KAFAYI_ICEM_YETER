@@ -19,44 +19,43 @@ namespace Business.Services
         {
             _studentRepo = studentRepo;
         }
-  
+
 
         public List<ReportModel> GetListInnerJoin(ReportFilterModel filter)
         {
             var studentQuery = _studentRepo.Query();
             var classQuery = _studentRepo.Query<Class>();
-            //var lessonQuery = _studentRepo.Query<Lesson>();
+            var lessonQuery = _studentRepo.Query<Lesson>();
             var studentLessonQuery = _studentRepo.Query<StudentLesson>();
-            var query = from student in studentQuery
-                        join Class in classQuery
-                        on student.ClassId equals Class.Id
-                        //join studentLesson in studentLessonQuery
-                        //on student.Id equals studentLesson.StudentId
-                        //join lesson in lessonQuery
-                        //on studentLesson.LessonId equals lesson.Id
 
-
-
-
-
+            var query = from s in studentQuery
+                        join c in classQuery
+                        on s.ClassId equals c.Id into studentclasses
+                        from studentcategory in studentclasses.DefaultIfEmpty()
+                        join sl in studentLessonQuery 
+                        on s.Id equals sl.StudentId into studentstudentlessons
+                        from studentstudentlesson in studentstudentlessons.DefaultIfEmpty()
+                        join l in lessonQuery
+                        on studentstudentlesson.LessonId equals l.Id into lessonstudentlessons
+                        from lessonsstudentlesson in lessonstudentlessons.DefaultIfEmpty()
                         select new ReportModel()
                         {
-                           ClassName = Class.Name,
-                           DateOfbirthDay = student.DateOfBirthday.HasValue ? student.DateOfBirthday.Value.ToString("MM/dd/yyyy") : "",
-                           StudentName = student.Name,
-                           schoolNo = student.SchoolNo.ToString(),
-                           StudentSurName = student.SurName,
-                            //LessonName = lesson.Name,
-                            //Numerical = lesson.IsNumeric ? "Yes" : "No",
+                            ClassName = studentcategory.Name,
+                            //DateOfbirthDay = student.DateOfBirthday.HasValue ? student.DateOfBirthday.Value.ToString("MM/dd/yyyy") : "",
+                            StudentName = s.Name,
+                            schoolNo = s.SchoolNo.ToString(),
+                            StudentSurName = s.SurName,
+                            LessonName = lessonsstudentlesson.Name,
+                            Numerical = lessonsstudentlesson.IsNumeric ? "Yes" : "No",
 
 
 
-                            ClassId = Class.Id,
-                           
-                           
+                            ClassId = studentcategory.Id,
+                            LessonIds= lessonsstudentlesson.Id
+
 
                         };
-            query =query.OrderBy(q => q.ClassName).ThenBy(q => q.StudentName);
+            query = query.OrderBy(q => q.ClassName).ThenBy(q => q.StudentName);
             if (filter is not null)
             {
                 if (!string.IsNullOrWhiteSpace(filter.StudentName))
@@ -67,18 +66,19 @@ namespace Business.Services
                 {
                     query = query.Where(q => q.ClassId == filter.ClassId.Value);
                 }
-                if (filter.LessonIds != null && filter.LessonIds.Count > 0)
-                {
-                    query = query.Where(q => filter.LessonIds.Contains(q.LessonIds ?? 0));
-                }
+               
                 if (!string.IsNullOrWhiteSpace(filter.StudentSurName))
                 {
                     query = query.Where(q => q.StudentSurName.ToUpper().Contains(filter.StudentSurName.ToUpper().Trim()));
+                }
+                if (filter.LessonIds != null && filter.LessonIds.Count > 0)
+                {
+                    query = query.Where(q => filter.LessonIds.Contains(q.LessonIds ?? 0));
                 }
             }
             return query.ToList();
         }
 
-        
+
     }
 }
