@@ -15,6 +15,6 @@ namespace DataAccess.Entities
         public string Name { get; set; }
         
 
-        public List<Student> Students { get; set; }
+        public List<Student>? Students { get; set; }
     }
 }

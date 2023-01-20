@@ -18,6 +18,8 @@ namespace OgrenciKayit.Areas.Database.Controllers
         }
         public IActionResult Index()
         {
+            
+
             var students = _db.Students.ToList();
             _db.Students.RemoveRange(students);
 
@@ -26,6 +28,15 @@ namespace OgrenciKayit.Areas.Database.Controllers
 
             var lessons = _db.Lessons.ToList();
             _db.Lessons.RemoveRange(lessons);
+
+            var cities = _db.Cities.ToList();
+            _db.Cities.RemoveRange(cities);
+
+            var countries = _db.Countries.ToList();
+            _db.Countries.RemoveRange(countries);
+
+            var userDetails = _db.UserDetails.ToList();
+            _db.UserDetails.RemoveRange(userDetails);
 
             var users = _db.Users.ToList();
             _db.Users.RemoveRange(users);
@@ -37,6 +48,7 @@ namespace OgrenciKayit.Areas.Database.Controllers
             {
                 _db.Database.ExecuteSqlRaw("dbcc CHECKIDENT ('Roles', RESEED, 0)");
             }
+
 
             _db.Lessons.Add(new Lesson()
             {
@@ -326,6 +338,43 @@ namespace OgrenciKayit.Areas.Database.Controllers
                 }
 
             });
+
+            _db.Countries.Add(new Country()
+            {
+                Name = "United States",
+                Cities = new List<City>()
+                {
+                    new City()
+                    {
+                        Name = "Los Angeles"
+                    },
+                    new City()
+                    {
+                        Name = "New York"
+                    }
+                }
+            });
+            _db.Countries.Add(new Country()
+            {
+                Name = "Turkey",
+                Cities = new List<City>()
+                {
+                    new City()
+                    {
+                        Name = "Ankara"
+                    },
+                    new City()
+                    {
+                        Name = "Istanbul"
+                    },
+                    new City()
+                    {
+                        Name = "Izmir"
+                    }
+                }
+            });
+            _db.SaveChanges();
+
             _db.Roles.Add(new Role()
             {
                 Name = "Admin",
