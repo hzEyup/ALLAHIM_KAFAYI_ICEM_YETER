@@ -62,6 +62,12 @@ builder.Services.AddScoped<ICountryService, CountryService>();
 
 #endregion
 // Add services to the container.
+
+#region app settings
+IConfigurationSection section = builder.Configuration.GetSection("AppSettings");
+section.Bind(new AppSettings());
+#endregion
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

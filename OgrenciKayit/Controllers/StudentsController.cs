@@ -11,6 +11,8 @@ using DataAccess.Entities;
 using Business.Services;
 using Business.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Build.Framework;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace OgrenciKayit.Controllers
 {
@@ -20,15 +22,15 @@ namespace OgrenciKayit.Controllers
         private readonly IStudentService _studentService;
         private readonly IClassService _classService;
         private readonly ILessonService _lessonService;
-		public StudentsController(IStudentService studentService, IClassService classService, ILessonService lessonService)
-		{
-			_studentService = studentService;
-			_classService = classService;
-			_lessonService = lessonService;
-		}
+        public StudentsController(IStudentService studentService, IClassService classService, ILessonService lessonService)
+        {
+            _studentService = studentService;
+            _classService = classService;
+            _lessonService = lessonService;
+        }
 
-		// GET: Students
-		public IActionResult Index()
+        // GET: Students
+        public IActionResult Index()
         {
             List<StudentModel> studentList = _studentService.Query().ToList(); // TODO: Add get list service logic here
             return View(studentList);
@@ -48,10 +50,10 @@ namespace OgrenciKayit.Controllers
         // GET: Students/Create
         public IActionResult Create()
         {
-			ViewData["ClassId"] = new SelectList(_classService.Query().ToList(), "Id", "Name");
-           ViewBag.Lessons = new MultiSelectList(_lessonService.Query().ToList(), "Id", "Name");
+            ViewData["ClassId"] = new SelectList(_classService.Query().ToList(), "Id", "Name");
+            ViewBag.Lessons = new MultiSelectList(_lessonService.Query().ToList(), "Id", "Name");
 
-			return View();
+            return View();
         }
 
         [HttpPost]
@@ -61,6 +63,14 @@ namespace OgrenciKayit.Controllers
         {
             if (ModelState.IsValid)
             {
+                bool? imageResult = UpdateImage(student, image);
+                if(imageResult == false)
+                {
+                    ModelState.AddModelError("", $"Image upload failed! Accepted extensions" +
+                        $" {AppSettings.AcceptedImageExtensions} and maximum image size (MB){AppSettings.AcceptedImageLength}");
+                    ViewData["ClassId"] = new SelectList(_classService.Query().ToList(), "Id", "Name");
+                    ViewBag.Lessons = new MultiSelectList(_lessonService.Query().ToList(), "Id", "Name");
+                }
                 var result = _studentService.Add(student);
                 if (result.IsSuccessful)
                     return RedirectToAction(nameof(Index));
@@ -71,18 +81,47 @@ namespace OgrenciKayit.Controllers
 
             return View(student);
         }
-        
-        private void UpdateImageExtension(StudentModel model, IFormFile image)
+
+
+        private bool? UpdateImage(StudentModel model, IFormFile image)
         {
-            string exisImageExtension = string.IsNullOrWhiteSpace(model.ImgSrcDisplay) ?  null :
-                Path.GetExtension(model.ImgSrcDisplay);
-            model.ImgExtension = image != null && image.Length > 0 ? Path.GetExtension(image.FileName) :
-                exisImageExtension;
+            #region Validation
+            bool? result = null;
+            string uploadedFileName = null, uploadedFileExtension = null;
+            if (image is not null && image.Length > 0)
+            {
+                result = false; 
+                uploadedFileName = image.FileName; 
+                uploadedFileExtension = Path.GetExtension(uploadedFileName); 
+                string[] acceptedImageExtensions = AppSettings.AcceptedImageExtensions.Split(',');
+                result = acceptedImageExtensions.Any(acceptedImageExtension => acceptedImageExtension.ToLower().Trim() == uploadedFileExtension.ToLower());
+                if (result == true)
+                {
+                    double acceptedImageLength = AppSettings.AcceptedImageLength * Math.Pow(1024, 2); // bytes
+                    if (image.Length > acceptedImageLength)
+                        result = false;
+                }
+            }
+            #endregion
+
+            #region Kayıt
+            if (result == true)
+            {
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    image.CopyTo(memoryStream);
+                    model.Image = memoryStream.ToArray();
+                    model.ImgExtension = uploadedFileExtension;
+                }
+            }
+            #endregion
+            return result;
         }
-        
-		// GET: Students/Edit/5
-		[Authorize(Roles = "Admin")]
-		public IActionResult Edit(int id)
+
+
+        // GET: Students/Edit/5
+        [Authorize(Roles = "Admin")]
+        public IActionResult Edit(int id)
         {
             StudentModel student = _studentService.Query().SingleOrDefault(s => s.Id == id);
             if (student == null)
@@ -90,22 +129,30 @@ namespace OgrenciKayit.Controllers
                 return NotFound();
             }
             ViewData["ClassId"] = new SelectList(_classService.Query().ToList(), "Id", "Name", student.ClassId);
-			ViewBag.Lessons = new MultiSelectList(_lessonService.Query().ToList(), "Id", "Name", student.LessonIds);
-			return View(student);
+            ViewBag.Lessons = new MultiSelectList(_lessonService.Query().ToList(), "Id", "Name", student.LessonIds);
+            return View(student);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(StudentModel student)
+        public IActionResult Edit(StudentModel student , IFormFile image)
         {
             if (ModelState.IsValid)
             {
+                bool? imageResult = UpdateImage(student, image);
+                if (imageResult == false)
+                {
+                    ModelState.AddModelError("", $"Image upload failed! Accepted extensions {AppSettings.AcceptedImageExtensions} and maximum image size (MB) {AppSettings.AcceptedImageLength}");
+                    ViewData["ClassId"] = new SelectList(_classService.Query().ToList(), "Id", "Name", student.ClassId);
+                    ViewBag.Lessons = new MultiSelectList(_lessonService.Query().ToList(), "Id", "Name", student.LessonIds);
+                    return View(student);
+                }
                 var result = _studentService.Update(student);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ClassId"] = new SelectList(_classService.Query().ToList(), "Id", "Name", student.ClassId);
-			ViewBag.Lessons = new MultiSelectList(_lessonService.Query().ToList(), "Id", "Name", student.LessonIds);
-			return View(student);
+            ViewBag.Lessons = new MultiSelectList(_lessonService.Query().ToList(), "Id", "Name", student.LessonIds);
+            return View(student);
         }
 
         // GET: Students/Delete/5
@@ -125,6 +172,12 @@ namespace OgrenciKayit.Controllers
         {
             _studentService.Delete(id);
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult DeleteImage(int id)
+        {
+            _studentService.DeleteImage(id);
+            return RedirectToAction(nameof(Details), new { id = id });
         }
     }
 }

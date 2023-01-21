@@ -31,6 +31,8 @@ namespace Business.Models
 
         public string ImgExtension { get; set; }
 
+        public byte[] Image{ get; set; }
+    
 
 
 

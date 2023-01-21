@@ -1,7 +1,7 @@
 ﻿@model StudentModel
 @*@{
     ViewData["Title"] = Model.Name + " "+  Model.SurName;
-    
+
 }*@
 
 </>
@@ -49,7 +49,15 @@
         <dd class="col-10">
             @Html.Raw(Model.LessonDisplay)
         </dd>
-
+        <dt class="col-2">
+            @Html.DisplayNameFor(model => model.ImgSrcDisplay)
+        </dt>
+        <dd class="col-10">
+            @if (!string.IsNullOrWhiteSpace(Model.ImgSrcDisplay))
+            {
+                <img src="=@Model.ImgSrcDisplay" class="img-fluid" />
+            }
+        </dd>
 
     </dl>
 </div>

@@ -63,17 +63,18 @@
                         @Html.DisplayNameFor(model => model.Report.FirstOrDefault().ClassName)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Report.FirstOrDefault().StudentName)
-                    </th>
-                    <th>
                         @Html.DisplayNameFor(model => model.Report.FirstOrDefault().schoolNo)
                     </th>
                     <th>
+                        @Html.DisplayNameFor(model => model.Report.FirstOrDefault().StudentName)
+                    </th>
+                  
+                    <th>
                         @Html.DisplayNameFor(model => model.Report.FirstOrDefault().StudentSurName)
                     </th>
-                    <th>
+                @*    <th>
                         @Html.DisplayNameFor(model => model.Report.FirstOrDefault().DateOfbirthDay)
-                    </th>
+                    </th>*@
                     <th>
                         @Html.DisplayNameFor(model => model.Report.FirstOrDefault().LessonName)
                     </th>
@@ -88,17 +89,16 @@
                             @Html.DisplayFor(modelItem => item.ClassName)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.StudentName)
-                        </td>
-                        <td>
                             @Html.DisplayFor(modelItem => item.schoolNo)
                         </td>
                         <td>
+                            @Html.DisplayFor(modelItem => item.StudentName)
+                        </td>
+                       
+                        <td>
                             @Html.DisplayFor(modelItem => item.StudentSurName)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DateOfbirthDay)
-                        </td>
+                     
                         <td>
                             @Html.DisplayFor(modelItem => item.LessonName)
                         </td>
