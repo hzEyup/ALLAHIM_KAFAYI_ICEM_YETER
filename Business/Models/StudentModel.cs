@@ -29,6 +29,11 @@ namespace Business.Models
         public int? ClassId { get; set; }
 
 
+        public string ImgExtension { get; set; }
+
+
+
+
         [DisplayName("Class")]
         public string ClassNameDisplay { get; set; }
 
@@ -43,5 +48,8 @@ namespace Business.Models
 
         [DisplayName("Lessons")] 
         public List<int> LessonIds { get; set; }
+
+        [DisplayName("Image")]
+        public string ImgSrcDisplay { get; set; }
     }
 }

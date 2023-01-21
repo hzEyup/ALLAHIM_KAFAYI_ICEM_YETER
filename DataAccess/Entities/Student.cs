@@ -3,8 +3,10 @@ using AppCore.Records.Bases;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,6 +28,12 @@ namespace DataAccess.Entities
 
         public DateTime? DateOfBirthday { get; set; }
         public int ClassId { get; set; }
+
+        [MaxLength(5)]
+        public string ImgExtension { get; set; }
+
+        [Column(TypeName ="image")]
+        public byte[] Image { get; set; }
         public Class Class { get; set; }
         public List<StudentLesson> studentLessons { get; set; }
     }

@@ -10,6 +10,7 @@ using DataAccess.Contexts;
 using DataAccess.Entities;
 using Business.Services;
 using Business.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OgrenciKayit.Controllers
 {
@@ -55,7 +56,8 @@ namespace OgrenciKayit.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(StudentModel student)
+        [Authorize(Roles = "Admin")]
+        public IActionResult Create(StudentModel student, IFormFile image)
         {
             if (ModelState.IsValid)
             {
@@ -69,9 +71,18 @@ namespace OgrenciKayit.Controllers
 
             return View(student);
         }
-
-        // GET: Students/Edit/5
-        public IActionResult Edit(int id)
+        
+        private void UpdateImageExtension(StudentModel model, IFormFile image)
+        {
+            string exisImageExtension = string.IsNullOrWhiteSpace(model.ImgSrcDisplay) ?  null :
+                Path.GetExtension(model.ImgSrcDisplay);
+            model.ImgExtension = image != null && image.Length > 0 ? Path.GetExtension(image.FileName) :
+                exisImageExtension;
+        }
+        
+		// GET: Students/Edit/5
+		[Authorize(Roles = "Admin")]
+		public IActionResult Edit(int id)
         {
             StudentModel student = _studentService.Query().SingleOrDefault(s => s.Id == id);
             if (student == null)
